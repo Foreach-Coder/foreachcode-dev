@@ -1,136 +1,228 @@
-# BluedCode 产品品牌需求
+# BluedCode Windows Desktop 品牌构建需求
 
 - 需求 ID：`ORIGIN-01`
 - 类型：跨版本需求
-- 状态：已确认
+- 状态：已确认，待版本实现
 - 产品：`BluedCode`
 
 ## 版本实现矩阵
 
-| OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec |
-| --- | --- | --- | --- |
-| `v1.17.9` | `dev-foreachcode-1.17.9` | `3654f46519ad689faf9179d7c15b2fbc5326ed1e` | [`OpenCode 1.17.9 产品品牌落地设计`](https://github.com/Foreach-Coder/opencode/blob/d20dd4fa61c405736559eb4e217bfb0aea01e33a/docs/superpowers/specs/2026-08-15-01-product-branding-design.md) |
+当前暂无通过完整验收的版本实现。只有目标版本满足本规格全部合同后，才能登记基线、实现分支、完整提交 ID 和版本落地 spec。
 
 ## 1. 需求背景
 
-BluedCode 是基于 OpenCode 构建的独立产品。每次升级 OpenCode 时，都必须重新建立完整且一致的产品身份，避免只替换可见字符串而遗漏安装身份、数据目录、协议、发行物或视觉资源。
+BluedCode 是基于 OpenCode 构建的独立 Windows Desktop 产品。产品需要在持续吸收 OpenCode 新版本的同时保持稳定的应用身份、视觉品牌、数据边界和发行身份，并把每次升级需要处理的差异限制在可审计的版本适配层。
 
-品牌信息必须有唯一、显式、可校验的构建输入。缺少品牌输入时不得生成可发布的 BluedCode 产物，也不得依赖散落在源码中的默认品牌值。
+品牌构建不得修改 OpenCode 已有的受跟踪源码。构建系统必须把上游工作区视为只读输入，在编译管线中受控地转换用户可见产品身份，并在隔离目录生成 BluedCode 产物。
 
-## 2. 产品身份合同
+## 2. 产品范围
 
-| 身份 | 稳定值 |
-| --- | --- |
-| 产品显示名 | `BluedCode` |
-| 产品 slug | `bluedcode` |
-| CLI 命令 | `bluedcode` |
-| Deep Link scheme | `bluedcode://` |
-| 全局数据子目录 | `bluedcode` |
-| 数据库文件 | `bluedcode.db` |
-| 日志文件 | `bluedcode.log` |
-| Desktop app ID | `ai.bluedcode.desktop` |
+本需求只覆盖：
 
-`dev`、`beta` 和 `prod` channel 可以拥有独立的显示后缀、Desktop app ID 和产物身份，但不能改变 CLI、协议和全局产品 slug。不同 channel 必须能够并存，不能覆盖彼此的数据或安装结果。
+- Windows Desktop；
+- Windows `x64`；
+- 单文件免安装 Portable EXE；
+- Desktop 主进程、preload、renderer 和运行所必需的内嵌 server/runtime。
 
-## 3. 构建输入
+以下能力不属于 BluedCode 产品入口：
 
-一次构建必须显式提供并统一校验以下信息：
+- 独立 CLI、CLI 安装入口和后台 CLI；
+- WSL CLI 安装与管理入口；
+- 独立 Web 产品入口；
+- TUI 产品入口；
+- SDK、Enterprise、macOS、Linux、Windows ARM64；
+- NSIS、MSI、ZIP、Microsoft Store 等其他分发格式。
 
-- 产品名称、slug、channel 和 Desktop app ID；
-- 是否启用企业产品策略；
-- 可选的产品发行号；
-- App Icon、Wordmark 和 TUI 字标资源。
+上游源码可以继续包含这些能力，但 BluedCode Desktop 构建不得把对应用户入口暴露或打包成独立产品。
 
-同一次构建的所有消费者必须使用同一份解析结果，不得各自声明品牌默认值或重复实现派生规则。未知字段、错误类型、无效身份、空值和不完整资源必须在编译或打包前失败。
+## 3. 产品身份合同
 
-本地开发、测试和正式发行都必须显式选择 BluedCode；不得因缺少参数而静默退回上游品牌或其他产品配置。
+| 身份 | `prod` | `dev` |
+| --- | --- | --- |
+| 产品显示名 | `BluedCode` | `BluedCode Dev` |
+| 产品 slug | `bluedcode` | `bluedcode` |
+| Desktop app ID | `ai.bluedcode.desktop` | `ai.bluedcode.desktop.dev` |
+| Deep Link scheme | `bluedcode://` | `bluedcode-dev://` |
+| 用户数据目录 | `%APPDATA%\ai.bluedcode.desktop` | `%APPDATA%\ai.bluedcode.desktop.dev` |
 
-## 4. 展示与分发行为
+两个 channel 必须能够同时存在，不得覆盖彼此的应用身份、协议注册、用户数据、日志、设置、缓存或窗口状态。
 
-- Desktop、Web、CLI、TUI、OAuth 页面和仍被部署的 Enterprise 页面必须使用 BluedCode 的可见品牌。
-- 安装命令、帮助、错误提示、应用菜单、通知、窗口标题、协议注册、PWA/Desktop 元数据和发行物名称必须一致。
-- 用户可执行的产品 CLI 只能是 `bluedcode`，不得额外创建其他产品的兼容别名。
-- 产品发行物必须具有独立的包身份、应用身份和可追踪版本，不能覆盖其他发行。
-- 浏览器持久化、Desktop store、主题、语言、workspace 和草稿等产品级 key 必须与其他产品隔离。
+Portable EXE 被移动到新路径后，应用必须在下次启动时刷新对应 Deep Link 的 Windows 注册路径。
 
-## 5. 数据隔离
+## 4. 品牌边界
 
-- XDG data、config、cache、state 和临时目录必须使用 BluedCode 身份。
-- 数据库、日志、Desktop user-data、updater 状态、debug 包和 WSL sidecar 路径不得与其他产品共用。
-- 首次启动不得探测、迁移、复制或删除其他产品的全局数据。
-- channel 需要独立运行时，必须使用不会互相覆盖的应用和数据身份。
+窗口标题、菜单、通知、登录引导、错误提示、Portable EXE、Windows 文件属性、图标、Wordmark、favicon 和 Desktop 多语言文本中的产品身份必须统一为 BluedCode。
 
-## 6. 发行版本
-
-产品版本由上游三段语义版本和 BluedCode 发行号组成：
-
-```text
-<base-version>-<release>
-```
-
-- 显式发行号格式为真实日期加 `01..99` 序号：`YYMMDD-NN`。
-- 未显式提供时，可由构建日期和 Git 短提交号生成可追踪发行号。
-- 同一次构建的 CLI、Desktop、错误诊断和平台产物必须报告同一组合版本。
-- 平台专用的版本元数据必须在签名或发布前完成，并保留平台要求的其他资源。
-
-## 7. 隔离和可重复构建
-
-- 构建只能在独立暂存区物化品牌化 manifest、模板、资源和产物。
-- 构建前已有的源码改动必须原样保留；构建自身不得新增、删除或修改源码树内容。
-- 清理操作只能作用于本次构建的精确暂存目录，不能递归清理仓库根目录或其他发行目录。
-- 需要外部目录快照的构建步骤必须使用可信本地输入；缺失时失败，不得静默访问公共服务。
-- 发布构建不得继承 Sentry、认证 token 或其他与 BluedCode 发行无关的发布凭据。
-
-## 8. 视觉资源合同
-
-根仓 `xcode/build/bluedcode/` 保存 BluedCode 的规范视觉资源。各 OpenCode 版本可以采用不同的注入技术，但必须满足以下合同。
-
-### 8.1 SVG
-
-- Wordmark 和 App Icon 必须具有有效、正尺寸的 `viewBox`。
-- 禁止脚本、事件处理器、`foreignObject`、嵌入对象、多媒体、动画、DOCTYPE、ENTITY、`@import` 和外部 URL。
-- 引用通常只能指向同一 SVG 内部的 `#id`。
-- App Icon 必须是正方形，并具有 `BluedCode application icon` 标题。
-
-### 8.2 App Icon PNG
-
-- App Icon SVG 最多引用一个同目录的 PNG 简单文件名。
-- PNG 必须存在、签名有效且宽高相等。
-- 构建产物必须把 PNG 内嵌为 data URI，不保留外部文件引用。
-
-### 8.3 TUI 点阵
-
-- 点阵必须声明 `width`、`height` 和 `cells`。
-- 宽度范围为 `1..80`，高度范围为 `1..16`。
-- 行列数量必须匹配，单元只能表示开或关，规范化后为 `0/1`。
-
-### 8.4 稳定摘要
-
-视觉摘要必须由规范化资源内容决定，不得包含源文件绝对路径。相同资源在不同目录中构建应得到相同摘要。
-
-## 9. 必须保留的上游协议
-
-以下兼容身份不得随产品品牌重命名：
+以下上游兼容身份不得因产品品牌而重命名：
 
 - `.opencode`、`opencode.json`、`opencode.jsonc`；
 - `OPENCODE_*`、`x-opencode-*`；
 - `opencode` provider ID；
-- `@opencode-ai/*`、已发布 API 类型、SDK 方法和内部协议字段；
-- OpenCode Zen、OpenCode Go、官方文档和官方服务 URL。
+- `@opencode-ai/*`、API 字段、SDK 方法和内部模块名；
+- OpenCode Zen、OpenCode Go 等上游服务专有名称；
+- Desktop 内嵌 server/runtime 之间使用的上游内部协议。
 
-## 10. 非目标
+BluedCode 对外构建入口使用自己的配置和参数；构建框架负责在边界处把参数映射为上游内部所需的 `OPENCODE_*`。最终产物内部允许保留经过分类和批准的技术标识，但不得在代表 Desktop 产品身份的用户界面中显示 OpenCode。
 
-- 不重命名上游源码目录、workspace 包或内部类型。
-- 不兼容、迁移或维护 BluedCode 之外的品牌 preset。
-- 不在本规格中定义 Provider、分享、遥测和更新策略；这些由 `ORIGIN-02` 负责。
+## 5. 源码零修改构建
 
-## 11. 验收标准
+品牌构建必须满足以下不变量：
 
-1. 缺少品牌输入、身份无效或资源不完整时，在编译和打包前失败。
-2. 所有用户可见界面、安装入口和产物统一显示 BluedCode，且不出现其他产品品牌。
-3. CLI、协议、目录、数据库、日志、Desktop app ID 和持久化 key 符合产品身份合同。
-4. 多 channel 与其他产品能够并存，不覆盖安装、数据或发行物。
-5. 构建完成后源码树与构建前一致，原有工作区改动不丢失。
-6. 同一构建的所有产物报告相同组合版本。
-7. 视觉资源通过安全校验，PNG 被内嵌，摘要不受绝对路径影响。
-8. 上游兼容协议和官方服务身份保持不变。
+- 不新增、修改或删除 OpenCode 已有的受跟踪源码；
+- 不在构建前改写上游文件再恢复；
+- 不修改 `node_modules`；
+- 不对仓库、ASAR、JavaScript bundle 或 EXE 执行无约束的全局字符串替换；
+- 只允许在编译管线内对已声明文件执行受控的内存转换；
+- 生成内容、缓存和产物只能写入精确的隔离目录；
+- 构建前后必须证明 Git 跟踪内容一致。
+
+若某个 OpenCode 版本无法在这些约束下实现完整品牌合同，必须停止并重新评审需求，不能自行修改上游源码绕过限制。
+
+这里的源码零修改只约束 `ORIGIN-01` 品牌实现及其构建过程。其他已经批准的需求可以修改 OpenCode 源码，但修改后必须重新执行品牌兼容审计，并在需要时更新当前版本适配器。
+
+## 6. 构建框架与版本适配
+
+构建能力分为两层：
+
+1. 通用构建框架负责配置解析、输入校验、语义转换、匹配计数、资源处理、缓存、产物扫描和审计报告。
+2. 版本适配器负责目标 tag 的基线指纹、源码映射、替换规则、保留白名单和少量结构性转换钩子。
+
+常见转换必须由声明式配置表达；只有删除入口或调整结构等无法由通用规则安全描述的变化，才能使用版本专用 AST 钩子。不得为了单个版本向通用框架堆叠路径判断和特殊分支。
+
+每个 OpenCode tag 必须拥有经过验证的精确适配配置。不得未经审计直接声明对整个小版本范围兼容。
+
+### 6.1 根仓与子仓
+
+根仓 `xcode/build/bluedcode/` 是通用构建框架、品牌配置和规范视觉资源的维护源。其可分发内容必须逐文件复制到子仓 `opencode/xcode/build/bluedcode/`，并通过摘要清单校验。
+
+子仓必须包含完整公共快照及当前版本适配器，脱离父级根仓后仍能安装依赖、执行构建和完成验收。不得使用指向父级根仓的路径或符号链接。
+
+历史版本分支冻结当时验证过的公共框架快照，不要求自动跟随根仓后续变化。
+
+### 6.2 小版本升级
+
+从一个已完成的 BluedCode 版本升级到新的 OpenCode tag 时，应从上一 BluedCode 版本分支创建新分支，再合入新的上游 tag，并执行兼容审计。
+
+兼容审计必须：
+
+- 对比两个 tag 中品牌规则涉及的文件和构建入口；
+- 在新版本上 dry-run 全部规则；
+- 报告可直接复用、需要更新和新增未分类的品牌引用；
+- 为新 tag 保存独立的精确适配配置；
+- 重新完成 Windows Portable 构建与运行验收。
+
+Git 合并成功不能作为品牌兼容的证明。
+
+## 7. 防错与防漏
+
+版本适配器中的每条规则必须记录：
+
+- 稳定规则 ID；
+- 精确目标文件与语义位置；
+- 预期原始值和目标值；
+- 预期匹配次数；
+- 转换原因及是否属于用户可见产品身份。
+
+构建必须默认失败：
+
+- tag、关键语义指纹或输入资源不匹配时失败；
+- 任一规则零命中或超出预期次数时失败；
+- 出现未分类的产品身份引用时失败；
+- 保留白名单之外的用户可见 OpenCode 残留时失败；
+- 版本专用规则命中非声明文件时失败。
+
+每次构建必须生成转换审计报告，列出规则、目标、命中数和转换结果。测试必须主动改变、删除和复制目标节点，证明规则失配时构建确实失败。
+
+## 8. 视觉资源
+
+规范资源包括 App Icon、App Icon PNG、Wordmark 和现有资源清单。根仓资源必须复制到子仓并逐文件校验。
+
+- Windows `.ico` 和 renderer favicon 由规范 App Icon 在构建时生成；
+- Desktop Logo、Wordmark、窗口图标和 Portable EXE 图标必须使用 BluedCode 资源；
+- 派生资源只能进入隔离构建目录；
+- `tui.json` 可以保留在规范资源快照中，但 Desktop 构建必须明确排除，不得进入缓存、renderer 或 Portable 产物。
+
+SVG 和 PNG 必须通过尺寸、格式、外部引用和危险内容校验；相同资源在不同绝对路径中必须得到相同规范摘要。
+
+## 9. 数据隔离
+
+BluedCode 不得探测、读取、迁移、复制、修改或删除 OpenCode Desktop 的全局用户数据。首次启动必须视为全新 BluedCode 安装。
+
+数据库、日志、Crashpad、窗口状态、设置、缓存、会话数据、debug 包和内嵌 server 状态必须落入当前 channel 的 BluedCode 用户数据边界。`dev` 和 `prod` 同样不得互相读取或迁移。
+
+## 10. 版本与发行
+
+正式版本格式为：
+
+```text
+<OpenCode版本>-<YYMMDD>-<NN>-<10位子仓commitid>
+```
+
+例如：
+
+```text
+1.2.3-260815-01-acde123456
+```
+
+- `commitid` 必须由干净的 `opencode` 子仓 HEAD 自动读取，不能手工传入；
+- `prod` 的日期与当日序号必须显式提供；
+- 同一天的 `NN` 从 `01` 开始，在所有 OpenCode 版本之间全局递增；
+- `dev` 使用 `<OpenCode版本>-dev-<10位commitid>`，不占用正式发行序号；
+- Windows 展示版本、文件名和诊断信息必须报告同一个产品版本；
+- Windows PE 所需的数字版本由构建逻辑单独映射，不能替代产品展示版本。
+
+正式发行序号以 `opencode` 子仓的 annotated Git tag 为权威账本，tag 格式为：
+
+```text
+bluedcode-v<OpenCode版本>-<YYMMDD>-<NN>
+```
+
+正式构建必须拒绝重复、回退或跳号。验收通过后才能创建 tag。发布说明、tag 注释和 release 文本必须使用中文。
+
+每个产物必须伴随 `release-manifest.json`，记录完整版本、完整 commit ID、tag、channel、输入摘要、规则摘要和 Portable EXE 的 SHA-256。
+
+## 11. 分发与安全
+
+- 只生成 Windows x64 单文件免安装 Portable EXE；
+- 用户数据仍保存在 AppData，不随 EXE 放置；
+- 不生成安装器、压缩包或商店包；
+- `dev` 和 `prod` 均禁用自动更新与自动发布；
+- 不继承上游 OpenCode 的发布仓库、Sentry、签名脚本、证书或凭据；
+- 当前产物不签名，发布时必须明确说明 Windows SmartScreen 可能显示未知发布者。
+
+## 12. 构建性能与缓存
+
+构建直接复用子仓已有的 `node_modules`，不得把依赖复制到派生源码树。首次或锁文件变化时使用冻结锁文件安装；后续构建复用依赖、Electron 下载和 Electron Builder 工具缓存。
+
+转换、内嵌 server、main、preload、renderer、视觉资源和打包阶段必须采用分阶段内容寻址缓存。缓存键至少包含：
+
+- OpenCode commit；
+- lockfile 与运行时工具版本；
+- Windows x64 平台；
+- 通用框架、版本适配器和品牌资源摘要；
+- channel。
+
+相同输入的第二次构建必须报告缓存命中。缓存命中不能跳过输入校验、审计报告或最终产物验收；正式签名若未来启用，签名结果不得作为可跨发行复用的构建缓存。
+
+## 13. 验收标准
+
+1. 构建前后没有任何 OpenCode 受跟踪源码发生变化。
+2. 子仓脱离父级根仓后可以独立完成依赖安装、构建和验收。
+3. 只生成命名正确的 Windows x64 Portable EXE 和 manifest。
+4. EXE 文件属性、图标、窗口、菜单、通知、引导和多语言产品身份均为 BluedCode。
+5. `dev` 与 `prod` 的 app ID、AppData、协议和运行状态互相隔离。
+6. Portable EXE 移动后再次启动能够刷新 Deep Link 注册路径。
+7. 不存在 CLI、后台 CLI、WSL CLI、独立 Web 或 TUI 用户入口。
+8. 更新器、发布器、Sentry 和上游签名逻辑均未启用。
+9. 全新用户目录启动成功，且不会读取或修改 OpenCode 数据。
+10. 必须保留的上游协议和服务身份继续工作。
+11. 规则失配、未知品牌引用、无效资源、重复发行号和非干净正式构建都会在打包前失败。
+12. 重复构建能够复用缓存，且不会因缓存跳过品牌审计。
+
+## 14. 非目标
+
+- 不把 OpenCode 源码改造成通用多品牌产品框架；
+- 不保证最终二进制中完全不存在 `OpenCode/opencode` 技术字符串；
+- 不迁移 OpenCode 或其他 channel 的用户数据；
+- 不实现自动更新、发布上传、代码签名或安装器；
+- 不为 CLI、Web、TUI、SDK、Enterprise、macOS、Linux 或 Windows ARM64 提供 BluedCode 品牌入口。

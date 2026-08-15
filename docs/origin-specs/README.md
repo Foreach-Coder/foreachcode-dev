@@ -14,7 +14,7 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 
 | ID | 规格 | 能力 |
 | --- | --- | --- |
-| `ORIGIN-01` | [`01-product-branding.md`](01-product-branding.md) | BluedCode 产品身份、构建一致性、数据隔离、版本和视觉资源合同 |
+| `ORIGIN-01` | [`01-product-branding.md`](01-product-branding.md) | Windows x64 Desktop 品牌、源码零修改构建、Portable 发行与数据隔离合同 |
 | `ORIGIN-02` | [`02-enterprise-product-policy.md`](02-enterprise-product-policy.md) | 企业构建的 Provider、分享、遥测、更新及公共服务边界 |
 | `ORIGIN-03` | [`03-file-tree-preference-sync.md`](03-file-tree-preference-sync.md) | 会话文件树偏好的恢复与运行时同步 |
 | `ORIGIN-04` | [`04-independent-clone-isolation.md`](04-independent-clone-isolation.md) | 独立 clone 与 linked worktree/sandbox 的生命周期隔离 |
@@ -30,11 +30,11 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 - 该分支首次完整满足整个 origin spec 的 commit ID；
 - 对应的版本落地 spec。
 
-矩阵记录完整实现落点，不使用分支当前 HEAD，也不把尚未通过版本验收的提交登记为完成。构成实现过程的其他提交保留在 evidence 或版本 spec 中。
+矩阵记录完整实现落点，不使用分支当前 HEAD，也不把尚未通过版本验收的提交登记为完成。构成实现过程的其他提交保留在版本 spec 中。
 
 ## 依赖关系
 
-- `ORIGIN-02` 依赖 `ORIGIN-01` 提供不可变的企业产品身份。
+- `ORIGIN-02` 在 Windows Desktop 范围内复用 `ORIGIN-01` 的产品身份和构建边界；其现有非 Desktop 条款将在讨论该需求时重新分类。
 - `ORIGIN-06` 的本地日志能力受 `ORIGIN-02` 的遥测出网策略约束。
 - `ORIGIN-03`、`ORIGIN-04` 和 `ORIGIN-05` 相互独立。
 
@@ -42,8 +42,9 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 
 ## 来源与版本落地
 
-- 当前需求集由 OpenCode tag `v1.17.9` 与分支 `dev-foreachcode-1.17.9` 的差异逆向得到。
-- OpenCode 1.17.9 的版本落地 spec 位于 `opencode/docs/superpowers/specs/`。
+- `ORIGIN-02` 至 `ORIGIN-06` 最初由 OpenCode tag `v1.17.9` 与分支 `dev-foreachcode-1.17.9` 的差异逆向得到。
+- `ORIGIN-01` 已重新确认为 Windows x64 Desktop-only 产品合同，不沿用 1.17.9 的实现记录。
+- 每个 OpenCode 版本的落地 spec 位于对应分支的 `opencode/docs/superpowers/specs/`。
 - 构成实现过程的历史提交、源码路径和测试位置由对应的版本落地 spec 维护。
 - 文档只维护 `BluedCode` 产品；历史分支中的其他品牌不属于需求合同。
 
