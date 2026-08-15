@@ -2,12 +2,14 @@
 
 - 需求 ID：`ORIGIN-01`
 - 类型：跨版本需求
-- 状态：已确认，待版本实现
+- 状态：已确认，已有 1.18.18 放宽验收实现
 - 产品：`BluedCode`
 
 ## 版本实现矩阵
 
-当前暂无通过完整验收的版本实现。只有目标版本满足本规格全部合同后，才能登记基线、实现分支、完整提交 ID 和版本落地 spec。
+| OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec | 验收口径 |
+| --- | --- | --- | --- | --- |
+| `v1.18.18` / `31406ccc51b4bd2a4e1e086b2bcaa5f7f804f26d` | `dev-foreachcode-1.18.18` | `e40c449f5e4aafa6196552db677e649ac0cd2d81` | `opencode/docs/superpowers/specs/2026-08-15-01-product-branding-design.md` | 放宽验收：`dev` Portable 已真实构建并完成静态产物审计；真实 `prod` 发布、完整 Windows 运行验收和额外供应链 hardening 留后续发布前处理。 |
 
 ## 1. 需求背景
 
