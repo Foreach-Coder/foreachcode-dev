@@ -9,7 +9,7 @@
 
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec | 验收口径 |
 | --- | --- | --- | --- | --- |
-| `v1.18.18` / `31406ccc51b4bd2a4e1e086b2bcaa5f7f804f26d` | `dev-foreachcode-1.18.18` | `65975db23c40e7be7babfe68309ea91cdda1e94e` | `opencode/docs/superpowers/specs/2026-08-15-01-product-branding-design.md` | 放宽验收：`dev` Portable 已真实构建、完成静态产物审计并通过启动 smoke 和新建会话页字标人工验收；真实 `prod` 发布、完整 Windows 运行验收和额外供应链 hardening 留后续发布前处理。 |
+| `v1.18.18` / `31406ccc51b4bd2a4e1e086b2bcaa5f7f804f26d` | `dev-foreachcode-1.18.18` | `8799a4188f1c9aace35ba342bdf409906b626791` | `opencode/docs/superpowers/specs/2026-08-15-01-product-branding-design.md` | 放宽验收：`dev` Portable 已真实构建、完成静态产物审计、通过启动 smoke 和新建会话页字标人工验收；默认 V1 布局且设置页可切换 V2。真实 `prod` 发布、完整 Windows 运行验收和额外供应链 hardening 留后续发布前处理。 |
 
 ## 1. 需求背景
 
