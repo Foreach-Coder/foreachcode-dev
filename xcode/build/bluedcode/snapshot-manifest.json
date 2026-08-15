@@ -1,0 +1,10 @@
+{
+  "frameworkVersion": 1,
+  "files": {
+    "app-icon.png": "09c7a59ee697399260ed638f92174f4a9f27ad1de956f8a94c1cde33774161d0",
+    "app-icon.svg": "14bd3cf865a42d119d9cb6c67aff6dd72dd40e55168e5cee54536a4fb3f8aba2",
+    "brand.json": "79b1ab2fe5cbe2f6a54098982b6f8b5c3f67f6f1d949db3d452d6c2eac961c5e",
+    "tui.json": "555066d8bdbdf2987d1312daff661a9bab1775fd9b5ae34ece9bc9dd2c0df04e",
+    "wordmark.svg": "33d9937e5502c2c25bd46766626b820bffa382e7a552c13db710e7a30a71e1f5"
+  }
+}
