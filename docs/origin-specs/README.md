@@ -14,12 +14,13 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 
 | ID | 规格 | 能力 |
 | --- | --- | --- |
-| `ORIGIN-01` | [`01-product-branding.md`](01-product-branding.md) | Windows x64 Desktop 品牌、源码零修改构建、Portable 发行与数据隔离合同 |
+| `ORIGIN-01` | [`01-product-branding.md`](01-product-branding.md) | Windows x64 Desktop 品牌、产品身份、Portable 发行与数据隔离合同 |
 | `ORIGIN-02` | [`02-enterprise-product-policy.md`](02-enterprise-product-policy.md) | 企业构建的 Provider、分享、遥测、更新及公共服务边界 |
 | `ORIGIN-03` | [`03-file-tree-preference-sync.md`](03-file-tree-preference-sync.md) | 会话文件树偏好的恢复与运行时同步 |
 | `ORIGIN-04` | [`04-independent-clone-isolation.md`](04-independent-clone-isolation.md) | 独立 clone 与 linked worktree/sandbox 的生命周期隔离 |
 | `ORIGIN-05` | [`05-reasoning-fragment-coalescing.md`](05-reasoning-fragment-coalescing.md) | 碎片化无签名 reasoning 的逻辑合并 |
 | `ORIGIN-06` | [`06-llm-performance-logging.md`](06-llm-performance-logging.md) | 不保留提示词内容的 LLM 性能诊断日志 |
+| `ORIGIN-07` | [`07-product-profile-architecture.md`](07-product-profile-architecture.md) | 单产品 Profile、源码/构建职责边界与跨版本演进合同 |
 
 ## 版本实现矩阵
 
@@ -34,7 +35,8 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 
 ## 依赖关系
 
-- `ORIGIN-02` 在 Windows Desktop 范围内复用 `ORIGIN-01` 的产品身份和构建边界；其现有非 Desktop 条款将在讨论该需求时重新分类。
+- `ORIGIN-01` 和 `ORIGIN-02` 从 OpenCode 1.18.18 起共同遵守 `ORIGIN-07` 的产品 Profile 与源码/构建职责边界。
+- `ORIGIN-02` 在 Windows Desktop 范围内复用 `ORIGIN-01` 的产品身份和发行边界；其现有非 Desktop 条款将在讨论该需求时重新分类。
 - `ORIGIN-06` 的本地日志能力受 `ORIGIN-02` 的遥测出网策略约束。
 - `ORIGIN-03`、`ORIGIN-04` 和 `ORIGIN-05` 相互独立。
 
