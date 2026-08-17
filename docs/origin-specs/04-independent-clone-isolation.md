@@ -9,6 +9,7 @@
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec |
 | --- | --- | --- | --- |
 | `v1.17.9` | `dev-foreachcode-1.17.9` | `66ec4bbefff123593e3bf538ffd8f7a7ffdd6d09` | [`OpenCode 1.17.9 独立 Clone 隔离落地设计`](https://github.com/Foreach-Coder/opencode/blob/d20dd4fa61c405736559eb4e217bfb0aea01e33a/docs/superpowers/specs/2026-08-15-04-independent-clone-isolation-design.md) |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `5d3a695dbd3055e9cccf564bdba9ec387744a213` | [`OpenCode 1.18.18 独立 Clone 与 Worktree 隔离落地设计`](https://github.com/Foreach-Coder/opencode/blob/5d3a695dbd3055e9cccf564bdba9ec387744a213/docs/superpowers/specs/2026-08-17-05-independent-clone-isolation-design.md) |
 
 ## 1. 需求背景
 
