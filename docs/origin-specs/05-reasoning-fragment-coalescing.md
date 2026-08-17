@@ -9,6 +9,7 @@
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec |
 | --- | --- | --- | --- |
 | `v1.17.9` | `dev-foreachcode-1.17.9` | `268cd6d3ddb3b5447bd7582b624a093009d245ef` | [`OpenCode 1.17.9 Reasoning 碎片合并落地设计`](https://github.com/Foreach-Coder/opencode/blob/d20dd4fa61c405736559eb4e217bfb0aea01e33a/docs/superpowers/specs/2026-08-15-05-reasoning-fragment-coalescing-design.md) |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `99325c3d258c102c448aab3f89e00ca8a6a89c50` | [`OpenCode 1.18.18 Reasoning 碎片合并落地设计`](https://github.com/Foreach-Coder/opencode/blob/560a30e4168a49fc1297e2a7fd876d134eb98a01/docs/superpowers/specs/2026-08-17-06-reasoning-fragment-coalescing-design.md) |
 
 ## 1. 需求背景
 
