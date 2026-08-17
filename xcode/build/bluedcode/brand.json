@@ -5,6 +5,5 @@
   "desktopAppId": "ai.bluedcode.desktop",
   "enterprise": true,
   "appIconSvg": "app-icon.svg",
-  "wordmarkSvg": "wordmark.svg",
-  "tuiWordmarkGrid": "tui.json"
+  "wordmarkSvg": "wordmark.svg"
 }

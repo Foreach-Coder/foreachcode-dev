@@ -2,17 +2,21 @@
 
 - 需求 ID：`ORIGIN-01`
 - 类型：跨版本需求
-- 状态：已确认，1.18.18 混合架构已实现
+- 状态：已实现，1.18.18 当前线性历史完成
 - 产品：`BluedCode`
 - 依赖：`ORIGIN-07`
 
 ## 版本实现矩阵
 
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec | 验收口径 |
-| --- | --- | --- | --- | --- |
-| `v1.18.18` | `dev-foreachcode-1.18.18` | `4b777025b908cd81a4b98c0457b2360059ea3b92` | [`OpenCode 1.18.18 产品品牌落地设计`](https://github.com/Foreach-Coder/opencode/blob/4b777025b908cd81a4b98c0457b2360059ea3b92/docs/superpowers/specs/2026-08-15-01-product-branding-design.md) | 已完成产品源码身份迁移、Windows x64 Portable 构建、最终 `release-manifest.json` 审计；正式产物版本为 `1.18.18-260816-01-4b777025b9`。 |
+| ------------- | -------- | -------- | ------------- | -------- |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `36899027b6694e5975dda6be9fa0b359b101355e` | `opencode/docs/superpowers/specs/2026-08-15-01-product-branding-design.md`；`opencode/docs/superpowers/specs/2026-08-16-03-product-profile-architecture-design.md` | Product Profile 源码身份、子仓独立构建、dev/prod Windows x64 Portable、真实 EXE 启动验收 |
+
+当前行记录的是 2026-08-17 线性实现历史的完成落点；若后续执行历史重整并重新验收，应以重整后的最终提交替换该行。
 
 原 1.18.18 构建期派生实现提交 `8799a4188f1c9aace35ba342bdf409906b626791` 保留为历史参考，但它不满足 `ORIGIN-07` 确立的混合架构合同，因此不再登记为当前规格的完成实现。
+
+混合架构提交 `4b777025b908cd81a4b98c0457b2360059ea3b92` 是 2026-08-17 收敛修订前的 1.18.18 实现基线；它尚未满足根仓无构建代码、通用 VersionAdapter registry、品牌改名单入口和最终 Portable 真实启动门禁，因此不登记为当前合同的完成实现。
 
 ## 1. 需求背景
 
@@ -42,13 +46,13 @@ BluedCode 产品分支允许提交少量、明确、可测试的产品源码改�
 
 ## 3. 产品身份合同
 
-| 身份 | `prod` | `dev` |
-| --- | --- | --- |
-| 产品显示名 | `BluedCode` | `BluedCode Dev` |
-| 产品 slug | `bluedcode` | `bluedcode` |
-| Desktop app ID | `ai.bluedcode.desktop` | `ai.bluedcode.desktop.dev` |
-| Deep Link scheme | `bluedcode://` | `bluedcode-dev://` |
-| 用户数据目录 | `%APPDATA%\ai.bluedcode.desktop` | `%APPDATA%\ai.bluedcode.desktop.dev` |
+| 身份             | `prod`                           | `dev`                                |
+| ---------------- | -------------------------------- | ------------------------------------ |
+| 产品显示名       | `BluedCode`                      | `BluedCode Dev`                      |
+| 产品 slug        | `bluedcode`                      | `bluedcode`                          |
+| Desktop app ID   | `ai.bluedcode.desktop`           | `ai.bluedcode.desktop.dev`           |
+| Deep Link scheme | `bluedcode://`                   | `bluedcode-dev://`                   |
+| 用户数据目录     | `%APPDATA%\ai.bluedcode.desktop` | `%APPDATA%\ai.bluedcode.desktop.dev` |
 
 两个 channel 必须能够同时存在，不得覆盖彼此的应用身份、协议注册、用户数据、日志、设置、缓存或窗口状态。
 
@@ -96,11 +100,11 @@ app ID、Deep Link、数据目录、产品能力和其他运行时语义不得�
 
 ### 6.1 根仓与子仓
 
-根仓 `xcode/build/bluedcode/` 是通用构建框架、品牌配置和规范视觉资源的维护源。其可分发内容必须逐文件复制到子仓 `opencode/xcode/build/bluedcode/`，并通过摘要清单校验。
+根仓 `xcode/build/bluedcode/` 只维护品牌源资源及其摘要，不保存任何可执行构建代码。根仓中的图标、Wordmark 和品牌视觉配置同步到子仓时必须逐文件校验；根仓不再作为通用构建框架的代码维护源。
 
-子仓必须包含完整公共快照及当前版本适配器，脱离父级根仓后仍能安装依赖、执行构建和完成验收。不得使用指向父级根仓的路径或符号链接。
+子仓 `opencode/xcode/build/bluedcode/` 是通用构建框架、版本适配器、测试和可独立构建品牌资源的唯一代码实现位置。子仓脱离父级根仓后仍必须能够安装依赖、执行构建和完成验收，不得使用指向父级根仓的路径或符号链接。
 
-历史版本分支冻结当时验证过的公共框架快照，不要求自动跟随根仓后续变化。
+历史版本分支冻结当时验证过的子仓构建框架和版本适配器，不要求自动跟随其他版本分支的后续变化。
 
 ### 6.2 小版本升级
 
@@ -134,7 +138,7 @@ Git 合并成功不能作为品牌兼容的证明。
 - 保留白名单之外的用户可见 OpenCode 残留时失败；
 - 版本专用规则命中非声明文件时失败。
 
-每次构建必须生成转换审计报告，列出规则、目标、命中数和转换结果。测试必须主动改变、删除和复制目标节点，证明规则失配时构建确实失败。
+每次构建必须生成转换审计报告，列出规则、目标、语义块、命中节点数和转换结果。一个完整 AST 字符串或同一文件中的一组同类产品文案应作为一个语义转换合同；不得把同一段文案中的多个关键词拆成互相独立的脆弱规则，也不得对整棵源码执行无边界字符串替换。测试必须主动改变、删除和复制目标节点，证明规则失配时构建确实失败。
 
 ## 8. 视觉资源
 
