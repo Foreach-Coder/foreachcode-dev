@@ -8,6 +8,8 @@
 
 ## 提交与发布语言
 
+- 未经用户在当前对话中明确要求，不得主动执行 `git commit`、`git push`、创建 tag、发布 Release、force push 或其他会改变远端/历史的操作。
+- 用户只要求实现、修复、验证、打包或查看状态时，只能保留工作区改动并汇报；是否提交、推送或发布必须等待用户另行明确指令。
 - 根仓和 `opencode` 子仓的所有 commit 摘要与正文必须使用中文。
 - commit 可以继续使用 Conventional Commits 的英文 `type(scope):` 前缀，但冒号后的描述和正文必须使用中文，例如 `docs: 更新跨版本规格`。
 - squash、revert、merge commit 以及自动生成的提交在允许编辑 message 时，也必须提供中文描述。
