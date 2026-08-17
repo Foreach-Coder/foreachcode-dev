@@ -9,6 +9,7 @@
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec |
 | --- | --- | --- | --- |
 | `v1.17.9` | `dev-foreachcode-1.17.9` | `7e98570f7058d9fd29d89a30a7e7c0742c7466c8` | [`OpenCode 1.17.9 LLM 性能日志落地设计`](https://github.com/Foreach-Coder/opencode/blob/d20dd4fa61c405736559eb4e217bfb0aea01e33a/docs/superpowers/specs/2026-08-15-06-llm-performance-logging-design.md) |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `2f61909544301cbe2b13db80c8bbc2d83043d09d` | [`opencode/docs/superpowers/specs/2026-08-17-07-llm-performance-logging-design.md`](../../opencode/docs/superpowers/specs/2026-08-17-07-llm-performance-logging-design.md) |
 
 ## 1. 需求目标
 
