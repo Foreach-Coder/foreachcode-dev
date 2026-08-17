@@ -2,9 +2,10 @@
   "schemaVersion": 1,
   "description": "Root repository BluedCode static brand resources only. Executable build framework lives in opencode/xcode/build/bluedcode.",
   "files": {
-    "app-icon.png": "35f53db41ac742115ae1fb4dbb025471da6ec0aacd98e5b0677410a66e50038b",
-    "app-icon.svg": "14bd3cf865a42d119d9cb6c67aff6dd72dd40e55168e5cee54536a4fb3f8aba2",
+    "app-icon.png": "0013787751d618e5218e6f3ef06f40f9f52a4c828ad360b9109b5eb2a9d6c5aa",
+    "app-icon.svg": "1a6b25d1de9f09d74a40a5bbc9235fa188bb7103718cad75588b5bb6576a6a41",
     "brand.json": "6544c73e91968bef4af6703f22f09b2502a9e500e3dc1eff6477db3fefed80ed",
-    "wordmark.svg": "33d9937e5502c2c25bd46766626b820bffa382e7a552c13db710e7a30a71e1f5"
+    "wordmark.png": "f3170a92edae725bdb111c56d64c093011b6bef6df2f1a677ddd9d7f00a081b6",
+    "wordmark.svg": "2f8f2d34d9e1277ef2d22933fe63d9759f9a7998d1b9850947432ebd2b6d22c5"
   }
 }
