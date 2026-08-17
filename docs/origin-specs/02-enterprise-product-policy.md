@@ -11,6 +11,7 @@
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec |
 | --- | --- | --- | --- |
 | `v1.17.9` | `dev-foreachcode-1.17.9` | `3654f46519ad689faf9179d7c15b2fbc5326ed1e` | [`OpenCode 1.17.9 企业策略落地设计`](https://github.com/Foreach-Coder/opencode/blob/d20dd4fa61c405736559eb4e217bfb0aea01e33a/docs/superpowers/specs/2026-08-15-02-enterprise-product-policy-design.md) |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `4b777025b908cd81a4b98c0457b2360059ea3b92` | [`OpenCode 1.18.18 企业策略落地设计`](https://github.com/Foreach-Coder/opencode/blob/4b777025b908cd81a4b98c0457b2360059ea3b92/docs/superpowers/specs/2026-08-16-02-enterprise-product-policy-design.md) |
 
 `v1.17.9` 行保留为企业行为的历史实现记录；`ORIGIN-07` 的混合架构约束从 1.18.18 起适用，该历史实现不作为新版本的架构模板。
 

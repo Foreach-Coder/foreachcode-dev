@@ -2,7 +2,7 @@
 
 - 需求 ID：`ORIGIN-01`
 - 类型：跨版本需求
-- 状态：已确认，1.18.18 混合架构迁移待实现
+- 状态：已确认，1.18.18 混合架构已实现
 - 产品：`BluedCode`
 - 依赖：`ORIGIN-07`
 
@@ -10,6 +10,7 @@
 
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec | 验收口径 |
 | --- | --- | --- | --- | --- |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `4b777025b908cd81a4b98c0457b2360059ea3b92` | [`OpenCode 1.18.18 产品品牌落地设计`](https://github.com/Foreach-Coder/opencode/blob/4b777025b908cd81a4b98c0457b2360059ea3b92/docs/superpowers/specs/2026-08-15-01-product-branding-design.md) | 已完成产品源码身份迁移、Windows x64 Portable 构建、最终 `release-manifest.json` 审计；正式产物版本为 `1.18.18-260816-01-4b777025b9`。 |
 
 原 1.18.18 构建期派生实现提交 `8799a4188f1c9aace35ba342bdf409906b626791` 保留为历史参考，但它不满足 `ORIGIN-07` 确立的混合架构合同，因此不再登记为当前规格的完成实现。
 

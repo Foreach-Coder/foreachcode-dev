@@ -2,13 +2,14 @@
 
 - 需求 ID：`ORIGIN-07`
 - 类型：跨版本需求
-- 状态：已确认，1.18.18 待实现
+- 状态：已确认，1.18.18 已实现
 - 产品：`BluedCode`
 
 ## 版本实现矩阵
 
 | OpenCode 基线 | 实现分支 | 完成提交 | 版本落地 spec |
 | ------------- | -------- | -------- | ------------- |
+| `v1.18.18` | `dev-foreachcode-1.18.18` | `4b777025b908cd81a4b98c0457b2360059ea3b92` | [`OpenCode 1.18.18 产品 Profile 架构落地设计`](https://github.com/Foreach-Coder/opencode/blob/4b777025b908cd81a4b98c0457b2360059ea3b92/docs/superpowers/specs/2026-08-16-03-product-profile-architecture-design.md) |
 
 只有目标版本完成源码迁移、构建收敛、Portable 运行验收和历史重整后，才能登记完成提交。
 
