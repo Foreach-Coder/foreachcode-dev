@@ -21,6 +21,7 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 | `ORIGIN-05` | [`05-reasoning-fragment-coalescing.md`](05-reasoning-fragment-coalescing.md) | 碎片化无签名 reasoning 的逻辑合并 |
 | `ORIGIN-06` | [`06-llm-performance-logging.md`](06-llm-performance-logging.md) | 不保留提示词内容的 LLM 性能诊断日志 |
 | `ORIGIN-07` | [`07-product-profile-architecture.md`](07-product-profile-architecture.md) | 单产品 Profile、源码/构建职责边界与跨版本演进合同 |
+| `ORIGIN-08` | [`08-conversation-response-annotations.md`](08-conversation-response-annotations.md) | 对历史 Assistant 正文添加引用注释并在后续回答中逐条关联回应 |
 
 ## 版本实现矩阵
 
@@ -38,7 +39,8 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 - `ORIGIN-01` 和 `ORIGIN-02` 从 OpenCode 1.18.18 起共同遵守 `ORIGIN-07` 的产品 Profile 与源码/构建职责边界。
 - `ORIGIN-02` 在 Windows Desktop 范围内复用 `ORIGIN-01` 的产品身份和发行边界；其现有非 Desktop 条款将在讨论该需求时重新分类。
 - `ORIGIN-06` 的本地日志能力受 `ORIGIN-02` 的遥测出网策略约束。
-- `ORIGIN-03`、`ORIGIN-04` 和 `ORIGIN-05` 相互独立。
+- `ORIGIN-08` 复用正常会话与模型请求链路，不改变 `ORIGIN-02` 的 Provider、网络和数据外发边界。
+- `ORIGIN-03`、`ORIGIN-04`、`ORIGIN-05` 和 `ORIGIN-08` 相互独立。
 
 依赖关系不等于目标版本的实施顺序；实际顺序由版本落地 spec 决定。
 
