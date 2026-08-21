@@ -16,6 +16,16 @@
 - 所有 release 的标题、发布说明、变更日志、升级提示和发布公告必须使用中文。
 - 版本号、Git tag、代码标识、命令、文件路径、API 名称和必须保持原样的上游专有名词可以保留英文；其解释文字仍使用中文。
 
+## 本地文件路径与可跳转链接
+
+- 向用户提供本地文件或目录时，必须优先给出 Codex 桌面端可点击跳转的 Markdown 链接。
+- Windows 本地路径必须转换为以 `/盘符:/` 开头、使用 `/` 分隔的绝对路径，例如 `[打开 ZIP 包](/D:/Develop/foreachcode/opencode/.xcode/bluedcode/example.zip)`。
+- 如果路径包含空格，Markdown 链接目标必须用尖括号包住，但仍保持 `/盘符:/` 与 `/` 分隔，例如 `[打开目录](</D:/Develop/My Project/output>)`。
+- 不要把 Windows 反斜杠路径直接放进 Markdown 链接目标，也不要使用 `<D:\...>` 这种格式；这会导致 Codex 桌面端无法跳转。
+- 错误案例：`[打开 ZIP 包](<D:\Develop\foreachcode\opencode\.xcode\bluedcode\out.zip>)`。
+- 正确案例：`[打开 ZIP 包](/D:/Develop/foreachcode/opencode/.xcode/bluedcode/out.zip)`。
+- 若用户要求“打开位置”或“跳转过去”，除提供正确链接外，可以用 Explorer 打开并选中文件；但最终回复仍必须包含可点击的正确链接。
+
 ## Spec 分类
 
 开始编写任何需求 spec 前，必须先判断它属于以下哪一类：
