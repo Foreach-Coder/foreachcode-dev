@@ -22,6 +22,7 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 | `ORIGIN-06` | [`06-llm-performance-logging.md`](06-llm-performance-logging.md) | 不保留提示词内容的 LLM 性能诊断日志 |
 | `ORIGIN-07` | [`07-product-profile-architecture.md`](07-product-profile-architecture.md) | 单产品 Profile、源码/构建职责边界与跨版本演进合同 |
 | `ORIGIN-08` | [`08-conversation-response-annotations.md`](08-conversation-response-annotations.md) | 对历史 Assistant 正文添加引用注释并在后续回答中逐条关联回应 |
+| `ORIGIN-09` | [`09-session-html-export.md`](09-session-html-export.md) | 内嵌原始 JSON 与公共渲染器的离线 HTML 单文件导出 |
 
 ## 版本实现矩阵
 
