@@ -23,6 +23,7 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 | `ORIGIN-07` | [`07-product-profile-architecture.md`](07-product-profile-architecture.md) | 单产品 Profile、源码/构建职责边界与跨版本演进合同 |
 | `ORIGIN-08` | [`08-conversation-response-annotations.md`](08-conversation-response-annotations.md) | 对历史 Assistant 正文添加引用注释并在后续回答中逐条关联回应 |
 | `ORIGIN-09` | [`09-session-html-export.md`](09-session-html-export.md) | 内嵌原始 JSON 与公共渲染器的离线 HTML 单文件导出 |
+| `ORIGIN-10` | [`10-mermaid-diagram-rendering.md`](10-mermaid-diagram-rendering.md) | 应用正文与离线 HTML 的 Mermaid 图表渲染、源码复制和安全降级 |
 
 ## 版本实现矩阵
 
@@ -41,6 +42,7 @@ Origin spec 侧重产品目标、用户场景、行为、不变量、安全边�
 - `ORIGIN-02` 在 Windows Desktop 范围内复用 `ORIGIN-01` 的产品身份和发行边界；其现有非 Desktop 条款将在讨论该需求时重新分类。
 - `ORIGIN-06` 的本地日志能力受 `ORIGIN-02` 的遥测出网策略约束。
 - `ORIGIN-08` 复用正常会话与模型请求链路，不改变 `ORIGIN-02` 的 Provider、网络和数据外发边界。
+- `ORIGIN-10` 的 HTML 快照遵守 `ORIGIN-09` 的原始 JSON、单文件离线和页面安全合同；应用内渲染不依赖 HTML 导出功能。
 - `ORIGIN-03`、`ORIGIN-04`、`ORIGIN-05` 和 `ORIGIN-08` 相互独立。
 
 依赖关系不等于目标版本的实施顺序；实际顺序由版本落地 spec 决定。
